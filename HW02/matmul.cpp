@@ -1,6 +1,7 @@
 #include "matmul.h"
 #include <vector>
 #include <iostream>
+#include "matmul.h"
 
 void mmul1(const double* A, const double* B, double* C, std::size_t n) {
     for (std::size_t i = 0; i < n; ++i) {
