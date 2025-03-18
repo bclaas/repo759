@@ -6,4 +6,7 @@
 #SBATCH --time=00:01:00
 
 # Run the task with the desired parameters
-./task3 $1 $2 $3
+for i in {1..8}
+do
+	./task3 $1 $2 $i
+done	

@@ -19,7 +19,7 @@ const double board_size = 4.0; // Size of the board
 
 // Function to calculate acceleration due to gravity
 void getAcc(const double pos[][3], const double mass[], double acc[][3], int N) {
-    #pragma omp parallel for
+    #pragma omp parallel for schedule(guided)
     for (int k = 0; k < N; k++) {
         acc[k][0] = acc[k][1] = acc[k][2] = 0.0;
     }
@@ -69,12 +69,6 @@ int main(int argc, char *argv[]) {
     high_resolution_clock::time_point end;
     duration<double, std::milli> duration_sec;
     start = high_resolution_clock::now();
-
-    // Check if correct number of arguments are provided
-    if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <number_of_particles> <simulation_end_time>" << std::endl;
-        return 1;
-    }
 
     // Read N and tEnd from command line
     int N = std::stoi(argv[1]);     // Number of particles
@@ -150,7 +144,7 @@ int main(int argc, char *argv[]) {
     for (int step = 0; step < Nt; step++) {
         
         // TODO: (1/2) kick
-        #pragma omp parallel for
+        #pragma omp parallel for schedule(guided)
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < 3; j++) {
                 vel[i][j] += acc[i][j] * (dt / 2.0);
@@ -158,7 +152,7 @@ int main(int argc, char *argv[]) {
         }
 
         // TODO: Drift
-        #pragma omp parallel for
+        #pragma omp parallel for schedule(guided)
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < 3; j++) {
                 pos[i][j] += vel[i][j] * dt;
@@ -166,7 +160,7 @@ int main(int argc, char *argv[]) {
         }
 
         // TODO: Ensure particles stay within the board limits
-        #pragma omp parallel for
+        #pragma omp parallel for schedule(guided)
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < 3; j++) {
                 if (pos[i][j] > board_size) pos[i][j] = board_size;
@@ -178,7 +172,7 @@ int main(int argc, char *argv[]) {
         getAcc(pos, mass, acc, N);
 
         // TODO: (1/2) kick
-        #pragma omp parallel for
+        #pragma omp parallel for schedule(guided)
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < 3; j++) {
                 vel[i][j] += acc[i][j] * (dt / 2.0);
