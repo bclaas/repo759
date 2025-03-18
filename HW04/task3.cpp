@@ -78,6 +78,9 @@ int main(int argc, char *argv[]) {
     // Read N and tEnd from command line
     int N = std::stoi(argv[1]);     // Number of particles
     double tEnd = std::stod(argv[2]); // Time at which simulation ends
+    int num_threads = std::stod(argv[3]);
+
+    omp_set_num_threads(4)
 
     // File to save positions
     std::string filename = "positions.csv";
