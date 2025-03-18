@@ -6,11 +6,6 @@
 #include "msort.h"
 
 int main(int argc, char* argv[]) {
-    if (argc != 4) {
-        std::cerr << "Usage: ./task3 n t ts\n";
-        return 1;
-    }
-
     std::size_t n = std::stoi(argv[1]);
     int t = std::stoi(argv[2]);
     int ts = std::stoi(argv[3]);
