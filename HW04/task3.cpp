@@ -6,6 +6,7 @@
 #include <ctime>   
 #include <chrono>
 #include <random>
+#include <omp.h>
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration;
@@ -80,7 +81,7 @@ int main(int argc, char *argv[]) {
     double tEnd = std::stod(argv[2]); // Time at which simulation ends
     int num_threads = std::stod(argv[3]);
 
-    omp_set_num_threads(4)
+    omp_set_num_threads(num_threads);
 
     // File to save positions
     std::string filename = "positions.csv";
