@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
     float milliseconds = 0;
     cudaEventElapsedTime(&milliseconds, start, stop);
 
-    // printf("%f\n", h_C[n * n - 1]);
+    printf("%f\n", h_C[n * n - 1]);
     printf("%f\n", milliseconds);
 
     cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
