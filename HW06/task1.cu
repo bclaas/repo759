@@ -1,13 +1,10 @@
+#include <cuda.h>
 #include <iostream>
 #include <vector>
 #include <ctime>
 #include <omp.h>
 #include <curand_kernel.h>
 #include "matmul.cuh"
-#include <chrono>
-
-using std::chrono::high_resolution_clock;
-using std::chrono::duration;
 
 void matmul(const float* A, const float* B, float* C, size_t n, unsigned int threads_per_block) {
     size_t total_threads = n * n;
@@ -52,10 +49,10 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    high_resolution_clock::time_point start;
-    high_resolution_clock::time_point end;
-    duration<double, std::milli> duration_sec;
-    start = high_resolution_clock::now();
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start);
 
     int n = std::atoi(argv[1]);
     unsigned int threads_per_block = std::atoi(argv[2]);
@@ -84,14 +81,17 @@ int main(int argc, char* argv[]) {
     cudaMemcpy(h_B, d_B, bytes, cudaMemcpyDeviceToHost);
     cudaMemcpy(h_C, d_C, bytes, cudaMemcpyDeviceToHost);
 
-    std::cout << h_C[n * n - 1] << std::endl;
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
+    
+    float milliseconds = 0;
+    cudaEventElapsedTime(&milliseconds, start, stop);
+
+    // printf("%f\n", h_C[n * n - 1]);
+    printf("%f\n", milliseconds);
 
     cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
     delete[] h_A; delete[] h_B; delete[] h_C;
-
-    end = high_resolution_clock::now();
-    duration_sec = std::chrono::duration_cast<duration<double, std::milli> >(end - start);
-    std::cout << duration_sec.count() << std::endl;
 
     return 0;
 }
