@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
     float* h_mask = new float[2 * R + 1];
     float* h_output = new float[n];
 
-    for (size_t i = 0; i < size; ++i) {
+    for (:_t i = 0; i < size; ++i) {
         h_image[i] = dist(gen);
         h_mask[i] = dist(gen);
     }    
