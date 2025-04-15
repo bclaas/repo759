@@ -7,13 +7,13 @@
 #include <curand_kernel.h>
 #include "stencil.cuh"
 
-void stencil(const float* image, const float* output, float* mask, unsigned int n, unsigned int R, unsigned int threads_per_block) {
+void stencil(const float* image, const float* mask, float* output, unsigned int n, unsigned int R, unsigned int threads_per_block) {
     int blocks = (n + threads_per_block - 1) / threads_per_block;
     int shared_mem_size = (threads_per_block + 2 * R) * sizeof(float);
     stencil_kernel<<<blocks, threads_per_block, shared_mem_size>>>(image, output, mask, n, R);
 }
 
-__global__ void stencil_kernel(const float* image, const float* mask, float* output, unsigned int n, unsigned int R, unsigned int threads_per_block) {
+__global__ void stencil_kernel(const float* image, const float* mask, float* output, unsigned int n, unsigned int R) {
     extern __shared__ float shared[];
 
     int tid = threadIdx.x;
@@ -75,11 +75,7 @@ int main(int argc, char* argv[]) {
     float* h_mask = new float[mask_len];
     float* h_output = new float[n];
 
-<<<<<<< HEAD
-    for (:_t i = 0; i < size; ++i) {
-=======
     for (int i = 0; i < n; ++i) {
->>>>>>> 8096a76 (Euler task2 debug)
         h_image[i] = dist(gen);
         h_mask[i] = dist(gen);
     }    
