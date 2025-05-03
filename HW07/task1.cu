@@ -44,10 +44,13 @@ int main(int argc, char **argv) {
     free(A);
     free(B);
     free(C);
+    float *A;
+    float *B;
+    float *C;
 
-    int *A = (float*)malloc(size_float);
-    int *B = (float*)malloc(size_float);
-    int *C = (float*)malloc(size_float);
+    A = (float*)malloc(size_float);
+    B = (float*)malloc(size_float);
+    C = (float*)malloc(size_float);
 
     for (unsigned int i = 0; i < n * n; ++i) {
         B[i] = (float)B_old[i];
@@ -71,18 +74,25 @@ int main(int argc, char **argv) {
     free(B_old);
     free(C_old);
 
+
     // MATMUL 3
     float *B_old = B;
     float *A_old = A;
     float *C_old = C;
+    *B_old = B;
+    *A_old = A;
+    *C_old = C;
 
     free(A);
     free(B);
     free(C);
+    double *A;
+    double *B;
+    double *C;
 
-    double *A = (double*)malloc(size_double);
-    double *B = (double*)malloc(size_double);
-    double *C = (double*)malloc(size_double);
+    A = (double*)malloc(size_double);
+    B = (double*)malloc(size_double);
+    C = (double*)malloc(size_double);
 
     for (unsigned int i = 0; i < n * n; ++i) {
         B[i] = (double)B_old[i];
