@@ -81,7 +81,8 @@ int main(int argc, char* argv[]) {
     }    
 
     // Device allocations
-    float *image, *output, *mask;
+    const float *image, *mask;
+    float *output;
     cudaMalloc(&image, n * sizeof(float));
     cudaMalloc(&output, n * sizeof(float));
     cudaMalloc(&mask, mask_len * sizeof(float));
@@ -100,7 +101,7 @@ int main(int argc, char* argv[]) {
     float milliseconds = 0;
     cudaEventElapsedTime(&milliseconds, start, stop);
 
-    printf("%f\n", h_output[n]);
+    // printf("%f\n", h_output[n]);
     printf("%f\n", milliseconds);
 
 
