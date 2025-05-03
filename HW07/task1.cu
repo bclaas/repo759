@@ -36,68 +36,40 @@ int main(int argc, char **argv) {
     printf("%f\n", C[n * n - 1]);
     printf("%f\n", milliseconds);
 
-    int *A_old = A;
-    int *B_old = B;
-    int *C_old = C;
-
-    free(A);
-    free(B);
-    free(C);
-
-    A = (float*)malloc(size_float);
-    B = (float*)malloc(size_float);
-    C = (float*)malloc(size_float);
+    float *A2 = (float*)malloc(size_float);
+    float *B2 = (float*)malloc(size_float);
+    float *C2 = (float*)malloc(size_float);
 
     for (unsigned int i = 0; i < n * n; ++i) {
-        A[i] = (float)A_old[i];
-        B[i] = (float)B_old[i];
-        C[i] = (float)C_old[i];
+        A2[i] = (float)A[i];
+        B2[i] = (float)B[i];
+        C2[i] = (float)C[i];
     }
 
-    free(A_old);
-    free(B_old);
-    free(C_old);
+    matmul_2(A2, B2, C2, n, block_dim);
 
-    matmul_2(A, B, C, n, block_dim);
+    printf("%f\n", C2[0]);
+    printf("%f\n", C2[n * n - 1]);
 
-    printf("%f\n", C[0]);
-    printf("%f\n", C[n * n - 1]);
-
-    float *A_old2 = A;
-    float *B_old2 = B;
-    float *C_old2 = C;
-
-    free(A);
-    free(B);
-    free(C);
-
-    A = (double*)malloc(size_double);
-    B = (double*)malloc(size_double);
-    C = (double*)malloc(size_double);
+    double *A3 = (double*)malloc(size_double);
+    double *B3 = (double*)malloc(size_double);
+    double *C3 = (double*)malloc(size_double);
 
     for (unsigned int i = 0; i < n * n; ++i) {
-        A[i] = (double)A_old2[i];
-        B[i] = (double)B_old2[i];
-        C[i] = (double)C_old2[i];
+        A3[i] = (double)A2[i];
+        B3[i] = (double)B2[i];
+        C3[i] = (double)C2[i];
     }
-
-    free(A_old2);
-    free(B_old2);
-    free(C_old2);
 
     cudaEventCreate(&start);
-    matmul_3(A, B, C, n, block_dim);
+    matmul_3(A3, B3, C3, n, block_dim);
     cudaEventRecord(stop);
     cudaEventSynchronize(stop);
     cudaEventElapsedTime(&milliseconds, start, stop);
 
-    printf("%f\n", C[0]);
-    printf("%f\n", C[n * n - 1]);
+    printf("%f\n", C3[0]);
+    printf("%f\n", C3[n * n - 1]);
     printf("%f\n", milliseconds);
-
-    free(A);
-    free(B);
-    free(C);
 
     return 0;
 }
