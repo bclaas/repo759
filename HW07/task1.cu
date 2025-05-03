@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
     unsigned int block_dim = atoi(argv[2]);
     size_t size_float = n * n * sizeof(float);
     size_t size_int = n * n * sizeof(int);
+    size_t size_double = n * n * sizeof(double);
 
     // MATMUL 1    
     int *A = (int*)malloc(size_int);
@@ -43,10 +44,10 @@ int main(int argc, char **argv) {
     free(A);
     free(B);
     free(C);
-    
-    B = (float*)malloc(n * n * sizeof(float));
-    A = (float*)malloc(n * n * sizeof(float));
-    C = (float*)malloc(n * n * sizeof(float));
+
+    int *A = (float*)malloc(size_float);
+    int *B = (float*)malloc(size_float);
+    int *C = (float*)malloc(size_float);
 
     for (unsigned int i = 0; i < n * n; ++i) {
         B[i] = (float)B_old[i];
@@ -79,9 +80,9 @@ int main(int argc, char **argv) {
     free(B);
     free(C);
 
-    B = (double*)malloc(n * n * sizeof(double));
-    A = (double*)malloc(n * n * sizeof(double));
-    C = (double*)malloc(n * n * sizeof(double));
+    double *A = (double*)malloc(size_double);
+    double *B = (double*)malloc(size_double);
+    double *C = (double*)malloc(size_double);
 
     for (unsigned int i = 0; i < n * n; ++i) {
         B[i] = (double)B_old[i];
