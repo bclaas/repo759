@@ -34,8 +34,8 @@ int main(int argc, char **argv) {
     float milliseconds = 0;
     cudaEventElapsedTime(&milliseconds, start1, stop1);
 
-    printf("%f\n", C[0]);
-    printf("%f\n", C[n * n - 1]);
+    printf("%d\n", C[0]);
+    printf("%d\n", C[n * n - 1]);
     printf("%f\n", milliseconds);
 
     float *A2 = (float*)malloc(size_float);
