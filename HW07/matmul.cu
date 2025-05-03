@@ -1,4 +1,4 @@
-#include <cuda_runtime.h>
+#include <cuda.h>
 #include <stdio.h>
 #include <ctime>
 #include "matmul.cuh"
