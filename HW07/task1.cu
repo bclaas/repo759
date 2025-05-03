@@ -44,9 +44,9 @@ int main(int argc, char **argv) {
     free(A);
     free(B);
     free(C);
-    float *A;
-    float *B;
-    float *C;
+    //float *A;
+    //float *B;
+    //float *C;
 
     A = (float*)malloc(size_float);
     B = (float*)malloc(size_float);
@@ -76,9 +76,9 @@ int main(int argc, char **argv) {
 
 
     // MATMUL 3
-    float *B_old = B;
-    float *A_old = A;
-    float *C_old = C;
+    //float *B_old = B;
+    //float *A_old = A;
+    //float *C_old = C;
     *B_old = B;
     *A_old = A;
     *C_old = C;
@@ -86,9 +86,9 @@ int main(int argc, char **argv) {
     free(A);
     free(B);
     free(C);
-    double *A;
-    double *B;
-    double *C;
+    //double *A;
+    //double *B;
+    //double *C;
 
     A = (double*)malloc(size_double);
     B = (double*)malloc(size_double);
