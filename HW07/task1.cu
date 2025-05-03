@@ -24,13 +24,13 @@ int main(int argc, char **argv) {
         B[i] = rand() % 10;
     }
 
-    cudaEvent_t start, stop;
-    cudaEventCreate(&start);
+    cudaEvent_t start1, stop1;
+    cudaEventCreate(&start1);
     matmul_1(A, B, C, n, block_dim);
-    cudaEventRecord(stop);
-    cudaEventSynchronize(stop);
+    cudaEventRecord(stop1);
+    cudaEventSynchronize(stop1);
     float milliseconds = 0;
-    cudaEventElapsedTime(&milliseconds, start, stop);
+    cudaEventElapsedTime(&milliseconds, start1, stop1);
 
     printf("%f\n", C[0]);
     printf("%f\n", C[n * n - 1]);
@@ -46,10 +46,16 @@ int main(int argc, char **argv) {
         C2[i] = (float)C[i];
     }
 
+    cudaEvent_t start2, stop2;
     matmul_2(A2, B2, C2, n, block_dim);
+    cudaEventRecord(stop2);
+    cudaEventSynchronize(stop2);
+    milliseconds = 0;
+    cudaEventElapsedTime(&milliseconds, start2, stop2);
 
     printf("%f\n", C2[0]);
     printf("%f\n", C2[n * n - 1]);
+    printf("%f\n", milliseconds);
 
     double *A3 = (double*)malloc(size_double);
     double *B3 = (double*)malloc(size_double);
@@ -61,11 +67,12 @@ int main(int argc, char **argv) {
         C3[i] = (double)C2[i];
     }
 
-    cudaEventCreate(&start);
+    cudaEvent_t start3, stop3;
+    cudaEventCreate(&start2);
     matmul_3(A3, B3, C3, n, block_dim);
-    cudaEventRecord(stop);
-    cudaEventSynchronize(stop);
-    cudaEventElapsedTime(&milliseconds, start, stop);
+    cudaEventRecord(stop2);
+    cudaEventSynchronize(stop2);
+    cudaEventElapsedTime(&milliseconds, start2, stop2);
 
     printf("%f\n", C3[0]);
     printf("%f\n", C3[n * n - 1]);

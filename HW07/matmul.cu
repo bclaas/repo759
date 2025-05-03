@@ -59,9 +59,9 @@ __global__ void matmul2_kernel(const int *A, const int *B, int *C, unsigned int 
     C[row * n + col] = sum;
 }
 
-void matmul_2(const int *A, const int *B, int *C, unsigned int n, unsigned int block_dim) {
-    int *d_A, *d_B, *d_C;
-    size_t size = n * n * sizeof(int);
+void matmul_2(const float *A, const float *B, float *C, unsigned int n, unsigned int block_dim) {
+    float *d_A, *d_B, *d_C;
+    size_t size = n * n * sizeof(float);
     cudaMalloc(&d_A, size);
     cudaMalloc(&d_B, size);
     cudaMalloc(&d_C, size);
@@ -97,7 +97,7 @@ __global__ void matmul3_kernel(const double *A, const double *B, double *C, unsi
 }
 
 void matmul_3(const double *A, const double *B, double *C, unsigned int n, unsigned int block_dim) {
-    int *d_A, *d_B, *d_C;
+    double *d_A, *d_B, *d_C;
     size_t size = n * n * sizeof(int);
     cudaMalloc(&d_A, size);
     cudaMalloc(&d_B, size);
@@ -106,7 +106,7 @@ void matmul_3(const double *A, const double *B, double *C, unsigned int n, unsig
     cudaMemcpy(d_B, B, size, cudaMemcpyHostToDevice);
     dim3 threads(block_dim, block_dim);
     dim3 blocks((n + block_dim - 1) / block_dim, (n + block_dim - 1) / block_dim);
-    size_t shared = 2 * block_dim * block_dim * sizeof(int);
+    size_t shared = 2 * block_dim * block_dim * sizeof(double);
     matmul3_kernel<<<blocks, threads, shared>>>(d_A, d_B, d_C, n);
     cudaMemcpy(C, d_C, size, cudaMemcpyDeviceToHost);
     cudaFree(d_A);
