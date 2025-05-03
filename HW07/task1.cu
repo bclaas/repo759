@@ -26,6 +26,8 @@ int main(int argc, char **argv) {
 
     cudaEvent_t start1, stop1;
     cudaEventCreate(&start1);
+    cudaEventCreate(&stop1);
+    cudaEventRecord(start1);
     matmul_1(A, B, C, n, block_dim);
     cudaEventRecord(stop1);
     cudaEventSynchronize(stop1);
@@ -47,6 +49,9 @@ int main(int argc, char **argv) {
     }
 
     cudaEvent_t start2, stop2;
+    cudaEventCreate(&start2);
+    cudaEventCreate(&stop2);
+    cudaEventRecord(start2);
     matmul_2(A2, B2, C2, n, block_dim);
     cudaEventRecord(stop2);
     cudaEventSynchronize(stop2);
@@ -68,7 +73,9 @@ int main(int argc, char **argv) {
     }
 
     cudaEvent_t start3, stop3;
-    cudaEventCreate(&start2);
+    cudaEventCreate(&start3);
+    cudaEventCreate(&stop3);
+    cudaEventRecord(start3);
     matmul_3(A3, B3, C3, n, block_dim);
     cudaEventRecord(stop2);
     cudaEventSynchronize(stop2);

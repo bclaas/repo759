@@ -40,7 +40,7 @@ void matmul_1(const int *A, const int *B, int *C, unsigned int n, unsigned int b
     cudaFree(d_C);
 }
 
-__global__ void matmul2_kernel(const int *A, const int *B, int *C, unsigned int n) {
+__global__ void matmul2_kernel(const float *A, const float *B, float *C, unsigned int n) {
     extern __shared__ int s[];
     int *As = s;
     int *Bs = s + blockDim.x * blockDim.y;
