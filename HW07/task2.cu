@@ -14,11 +14,10 @@ int main(int argc, char** argv) {
     size_t N = atoi(argv[1]);
     unsigned int threads_per_block = atoi(argv[2]);
 
-    // Allocate and initialize host array with random values in range [-1, 1]
     std::vector<float> h_data(N);
     srand(time(NULL));
     for (size_t i = 0; i < N; ++i) {
-        h_data[i] = (float(rand()) / RAND_MAX) * 2.0f - 1.0f; // [-1, 1]
+        h_data[i] = (float(rand()) / RAND_MAX) * 2.0f - 1.0f;
     }
 
     float* d_in;
