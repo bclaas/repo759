@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <ctime>
 #include "matmul.cuh"
-#include "matmul.cu"
 
 int main(int argc, char **argv) {
     if (argc != 3) {
@@ -41,6 +40,10 @@ int main(int argc, char **argv) {
     int *A_old = A;
     int *C_old = C;
 
+    free(A);
+    free(B);
+    free(C);
+    
     B = (float*)malloc(n * n * sizeof(float));
     A = (float*)malloc(n * n * sizeof(float));
     C = (float*)malloc(n * n * sizeof(float));
@@ -71,6 +74,10 @@ int main(int argc, char **argv) {
     float *B_old = B;
     float *A_old = A;
     float *C_old = C;
+
+    free(A);
+    free(B);
+    free(C);
 
     B = (double*)malloc(n * n * sizeof(double));
     A = (double*)malloc(n * n * sizeof(double));
