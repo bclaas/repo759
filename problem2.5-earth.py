@@ -1,0 +1,52 @@
+import pychrono as chrono
+import pychrono.asset as asset
+import pychrono_irrlicht as chronoirr
+
+system = chrono.ChSystemNSC()
+system.Set_G_acc(chrono.ChVectorD(0, 0, -9.81))
+
+big_box = chrono.ChBody()
+big_box.SetBodyFixed(True)
+big_box_size = chrono.ChVectorD(1.0, 1.0, 0.25)
+big_box.GetCollisionModel().ClearModel()
+big_box.GetCollisionModel().AddBox(big_box_size.x/2, big_box_size.y/2, big_box_size.z/2)
+big_box.GetCollisionModel().BuildModel()
+big_box.SetCollide(True)
+mat_big = chrono.ChMaterialSurfaceNSC()
+mat_big.SetFriction(0.5)
+big_box.SetMaterialSurface(mat_big)
+big_box.SetPos(chrono.ChVectorD(0, 0, big_box_size.z/2))
+system.Add(big_box)
+vis_big = asset.ChColorAsset()
+vis_big.SetColor(chrono.ChColor(0.7, 0.7, 0.7))
+big_box.AddAsset(vis_big)
+
+small_cube = chrono.ChBody()
+small_cube.SetBodyFixed(False)
+small_cube_size = chrono.ChVectorD(0.2, 0.2, 0.2)
+small_cube.GetCollisionModel().ClearModel()
+small_cube.GetCollisionModel().AddBox(small_cube_size.x/2, small_cube_size.y/2, small_cube_size.z/2)
+small_cube.GetCollisionModel().BuildModel()
+small_cube.SetCollide(True)
+mat_small = chrono.ChMaterialSurfaceNSC()
+mat_small.SetFriction(0.5)
+small_cube.SetMaterialSurface(mat_small)
+small_cube.SetPos(chrono.ChVectorD(0, 0, big_box_size.z + small_cube_size.z/2))
+system.Add(small_cube)
+vis_small = asset.ChColorAsset()
+vis_small.SetColor(chrono.ChColor(0.2, 0.2, 0.9))
+small_cube.AddAsset(vis_small)
+
+application = chronoirr.ChIrrApp(system, "Fixed Box with Cube", chronoirr.dimension2du(800, 600))
+application.AddTypicalSky()
+application.AddTypicalCamera(chronoirr.vector3df(1, -2, 1))
+application.AddLightWithShadow(chronoirr.vector3df(2, -2, 5), chronoirr.vector3df(0, 0, 0), 10, 10, 10, 50, 50)
+application.AssetBindAll()
+application.AssetUpdateAll()
+
+application.SetTimestep(0.01)
+while application.GetDevice().run():
+    application.BeginScene()
+    application.DrawAll()
+    application.DoStep()
+    application.EndScene()
